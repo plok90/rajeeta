@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #0284c7;
+  --primary-light: #e0f2fe;
+  --primary-dark: #0369a1;
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #cbd5e1;
+  --sidebar-active: #0284c7;
+  --border: #e2e8f0;
+  --card: #ffffff;
+  --muted: #64748b;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+[data-theme="dark"] {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --primary: #38bdf8;
+  --primary-light: #0c4a6e;
+  --primary-dark: #7dd3fc;
+  --sidebar-bg: #020617;
+  --sidebar-text: #94a3b8;
+  --border: #1e293b;
+  --card: #1e293b;
+  --muted: #94a3b8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-sidebar-text: var(--sidebar-text);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.sidebar-link {
+  @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200;
+}
+
+.sidebar-link:hover {
+  @apply bg-white/10;
+}
+
+.sidebar-link.active {
+  @apply bg-primary text-white font-medium;
+}
+
+.card {
+  @apply bg-card rounded-xl border border-border p-6 shadow-sm;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary-dark;
+}
+
+.btn-secondary {
+  @apply bg-border text-foreground hover:bg-muted/20;
+}
+
+.btn-danger {
+  @apply bg-danger text-white hover:bg-red-600;
+}
+
+.btn-success {
+  @apply bg-success text-white hover:bg-green-600;
+}
+
+.input {
+  @apply w-full rounded-lg border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all;
+}
+
+.label {
+  @apply block text-sm font-medium text-foreground mb-1.5;
+}
+
+.stat-card {
+  @apply bg-card rounded-xl border border-border p-6 shadow-sm;
+}
+
+.table-container {
+  @apply overflow-x-auto rounded-xl border border-border;
+}
+
+.table-container table {
+  @apply w-full text-sm;
+}
+
+.table-container th {
+  @apply bg-primary-light px-4 py-3 text-left font-medium text-primary-dark;
+}
+
+.table-container td {
+  @apply px-4 py-3 border-t border-border;
+}
+
+.table-container tr:hover td {
+  @apply bg-primary-light/30;
+}
+
+/* Tooth status colors */
+.tooth-healthy { @apply fill-green-100 stroke-green-500; }
+.tooth-caries { @apply fill-yellow-100 stroke-yellow-500; }
+.tooth-fractured { @apply fill-orange-100 stroke-orange-500; }
+.tooth-missing { @apply fill-gray-200 stroke-gray-400; }
+.tooth-requires_treatment { @apply fill-red-50 stroke-red-400; }
+.tooth-treatment_in_progress { @apply fill-blue-100 stroke-blue-500; }
+.tooth-treated { @apply fill-green-50 stroke-green-400; }
+.tooth-root_canal_treated { @apply fill-purple-100 stroke-purple-500; }
+.tooth-crown { @apply fill-amber-100 stroke-amber-500; }
+.tooth-implant { @apply fill-cyan-100 stroke-cyan-500; }
+
+.tooth-tooth-number {
+  @apply text-[10px] font-medium fill-current select-none pointer-events-none;
+}
