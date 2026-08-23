@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { patientName, phoneNumber, gender, dateOfBirth, notes, treatments } = body;
+    const { patientName, phoneNumber, gender, dateOfBirth, notes, treatments, visitDate, prescribedTreatment } = body;
 
     if (!patientName || !phoneNumber || !gender || !dateOfBirth) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -45,7 +45,8 @@ export async function POST(request: Request) {
       data: {
         patientId: patient.id,
         dentistId: session.dentistId,
-        visitDate: new Date(),
+        visitDate: visitDate ? new Date(visitDate) : new Date(),
+        notes: prescribedTreatment || null,
       },
     });
 
@@ -59,11 +60,16 @@ export async function POST(request: Request) {
           },
         });
 
+        let chartStatus = "treatment_in_progress";
+        if (treatment.treatmentType === "extraction") chartStatus = "missing";
+        else if (treatment.treatmentType === "rootFilling") chartStatus = "root_canal_treated";
+        else if (["prosthesis", "crown"].includes(treatment.treatmentType)) chartStatus = "crown";
+
         let chart;
         if (existing) {
           chart = await prisma.dentalChart.update({
             where: { id: existing.id },
-            data: { status: "treatment_in_progress" },
+            data: { status: chartStatus },
           });
         } else {
           chart = await prisma.dentalChart.create({
@@ -72,7 +78,7 @@ export async function POST(request: Request) {
               toothNumber: treatment.toothNumber,
               toothPosition: treatment.toothPosition || "",
               dentitionType: treatment.dentitionType || "permanent",
-              status: "treatment_in_progress",
+              status: chartStatus,
             },
           });
         }
